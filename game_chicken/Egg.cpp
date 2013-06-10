@@ -2,8 +2,6 @@
 //  Egg.cpp
 //  game_chicken
 //
-//  Created by MinhNT on 13/06/07.
-//
 //
 
 #include "Egg.h"

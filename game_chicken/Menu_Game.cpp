@@ -2,8 +2,6 @@
 //  Menu_Game.cpp
 //  game_chicken
 //
-//  Created by MinhNT on 13/06/10.
-//
 //
 #include "HelloWorldScene.h"
 #include "Menu_Game.h"

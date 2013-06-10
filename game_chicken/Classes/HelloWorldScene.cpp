@@ -239,7 +239,7 @@ void HelloWorld::addEgg()
     arrayEgg->addObject(e);
     this->addChild(e,3);
     
-    SimpleAudioEngine::sharedEngine()->playBackgroundMusic("sound3.mp3");
+    SimpleAudioEngine::sharedEngine()->playEffect("sound3.mp3");
     
 }
 void HelloWorld::gamelogicAddEgg(float dt)

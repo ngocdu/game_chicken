@@ -2,8 +2,6 @@
 //  game_chickenAppDelegate.h
 //  game_chicken
 //
-//  Created by MinhNT on 13/06/07.
-//  Copyright __MyCompanyName__ 2013年. All rights reserved.
 //
 
 #ifndef  _APP_DELEGATE_H_
