@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DC5DDA961765680B00DFF252 /* Menu_Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5DDA951765680B00DFF252 /* Menu_Game.cpp */; };
+		DC5DDAAD17658C7A00DFF252 /* egg1.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDAAA17658C7A00DFF252 /* egg1.png */; };
+		DC5DDAAE17658C7A00DFF252 /* egg2.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDAAB17658C7A00DFF252 /* egg2.png */; };
+		DC5DDAAF17658C7A00DFF252 /* eggVo.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDAAC17658C7A00DFF252 /* eggVo.png */; };
+		DC5DDAB11765B21300DFF252 /* level.txt in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDAB01765B21200DFF252 /* level.txt */; };
+		DC5DDAB31765CA3A00DFF252 /* fire.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDAB21765CA3900DFF252 /* fire.png */; };
+		DC5DDAB51765CBDC00DFF252 /* stars.png in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDAB41765CBDB00DFF252 /* stars.png */; };
+		DC5DDAB81765D23800DFF252 /* Help.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC5DDAB71765D23800DFF252 /* Help.cpp */; };
+		DC5DDABC1765DCED00DFF252 /* sound1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDAB91765DCEA00DFF252 /* sound1.mp3 */; };
+		DC5DDABD1765DCED00DFF252 /* sound2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDABA1765DCEB00DFF252 /* sound2.mp3 */; };
+		DC5DDABE1765DCED00DFF252 /* sound3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DC5DDABB1765DCEC00DFF252 /* sound3.mp3 */; };
 		DC81000217619F6A0040A5BD /* AtlasAttachmentLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC81000117619F6A0040A5BD /* AtlasAttachmentLoader.cpp */; };
 		DC81000517619F6A0040A5BD /* Attachment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC81000417619F6A0040A5BD /* Attachment.cpp */; };
 		DC81000817619F6B0040A5BD /* AttachmentLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC81000717619F6B0040A5BD /* AttachmentLoader.cpp */; };
@@ -281,6 +292,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DC5DDA94176567EC00DFF252 /* Menu_Game.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Menu_Game.h; sourceTree = "<group>"; };
+		DC5DDA951765680B00DFF252 /* Menu_Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Menu_Game.cpp; sourceTree = "<group>"; };
+		DC5DDAAA17658C7A00DFF252 /* egg1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egg1.png; path = Resources/egg1.png; sourceTree = "<group>"; };
+		DC5DDAAB17658C7A00DFF252 /* egg2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = egg2.png; path = Resources/egg2.png; sourceTree = "<group>"; };
+		DC5DDAAC17658C7A00DFF252 /* eggVo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = eggVo.png; path = Resources/eggVo.png; sourceTree = "<group>"; };
+		DC5DDAB01765B21200DFF252 /* level.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = level.txt; sourceTree = "<group>"; };
+		DC5DDAB21765CA3900DFF252 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
+		DC5DDAB41765CBDB00DFF252 /* stars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars.png; sourceTree = "<group>"; };
+		DC5DDAB61765D22B00DFF252 /* Help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Help.h; sourceTree = "<group>"; };
+		DC5DDAB71765D23800DFF252 /* Help.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Help.cpp; sourceTree = "<group>"; };
+		DC5DDAB91765DCEA00DFF252 /* sound1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound1.mp3; path = Resources/sound1.mp3; sourceTree = "<group>"; };
+		DC5DDABA1765DCEB00DFF252 /* sound2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound2.mp3; path = Resources/sound2.mp3; sourceTree = "<group>"; };
+		DC5DDABB1765DCEC00DFF252 /* sound3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sound3.mp3; path = Resources/sound3.mp3; sourceTree = "<group>"; };
 		DC81000017619F6A0040A5BD /* Atlas.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Atlas.h; path = libs/extensions/spine/Atlas.h; sourceTree = "<group>"; };
 		DC81000117619F6A0040A5BD /* AtlasAttachmentLoader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AtlasAttachmentLoader.cpp; path = libs/extensions/spine/AtlasAttachmentLoader.cpp; sourceTree = "<group>"; };
 		DC81000317619F6A0040A5BD /* AtlasAttachmentLoader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AtlasAttachmentLoader.h; path = libs/extensions/spine/AtlasAttachmentLoader.h; sourceTree = "<group>"; };
@@ -1004,6 +1028,10 @@
 				DC81009417619F6C0040A5BD /* HelloWorldScene.cpp */,
 				DC8100B31761B21F0040A5BD /* Egg.h */,
 				DC8100B41761B2390040A5BD /* Egg.cpp */,
+				DC5DDA94176567EC00DFF252 /* Menu_Game.h */,
+				DC5DDA951765680B00DFF252 /* Menu_Game.cpp */,
+				DC5DDAB61765D22B00DFF252 /* Help.h */,
+				DC5DDAB71765D23800DFF252 /* Help.cpp */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -1072,6 +1100,14 @@
 		DC81FD2E17619F5D0040A5BD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				DC5DDAB91765DCEA00DFF252 /* sound1.mp3 */,
+				DC5DDABA1765DCEB00DFF252 /* sound2.mp3 */,
+				DC5DDABB1765DCEC00DFF252 /* sound3.mp3 */,
+				DC5DDAB41765CBDB00DFF252 /* stars.png */,
+				DC5DDAB21765CA3900DFF252 /* fire.png */,
+				DC5DDAAA17658C7A00DFF252 /* egg1.png */,
+				DC5DDAAB17658C7A00DFF252 /* egg2.png */,
+				DC5DDAAC17658C7A00DFF252 /* eggVo.png */,
 				DC81009E1761AD580040A5BD /* image */,
 				DC81FD2F17619F5D0040A5BD /* CloseNormal.png */,
 				DC81FD3117619F5D0040A5BD /* CloseSelected.png */,
@@ -1085,6 +1121,7 @@
 				DC81FD4117619F5D0040A5BD /* Icon@2x.png */,
 				DC81FD4317619F5D0040A5BD /* iTunesArtwork */,
 				DC81FD4517619F5D0040A5BD /* Info.plist */,
+				DC5DDAB01765B21200DFF252 /* level.txt */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2105,6 +2142,15 @@
 				DC8100B01761AD580040A5BD /* nenf.png in Resources */,
 				DC8100B11761AD580040A5BD /* nenkaka.png in Resources */,
 				DC8100B21761AD580040A5BD /* vangegg1.png in Resources */,
+				DC5DDAAD17658C7A00DFF252 /* egg1.png in Resources */,
+				DC5DDAAE17658C7A00DFF252 /* egg2.png in Resources */,
+				DC5DDAAF17658C7A00DFF252 /* eggVo.png in Resources */,
+				DC5DDAB11765B21300DFF252 /* level.txt in Resources */,
+				DC5DDAB31765CA3A00DFF252 /* fire.png in Resources */,
+				DC5DDAB51765CBDC00DFF252 /* stars.png in Resources */,
+				DC5DDABC1765DCED00DFF252 /* sound1.mp3 in Resources */,
+				DC5DDABD1765DCED00DFF252 /* sound2.mp3 in Resources */,
+				DC5DDABE1765DCED00DFF252 /* sound3.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2353,6 +2399,8 @@
 				DC81009517619F6C0040A5BD /* HelloWorldScene.cpp in Sources */,
 				DC81009D17619F870040A5BD /* CCDataVisitor.cpp in Sources */,
 				DC8100B51761B2390040A5BD /* Egg.cpp in Sources */,
+				DC5DDA961765680B00DFF252 /* Menu_Game.cpp in Sources */,
+				DC5DDAB81765D23800DFF252 /* Help.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2481,6 +2529,7 @@
 				DC81009A17619F6C0040A5BD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC81FD1517619F5D0040A5BD /* Build configuration list for PBXProject "game_chicken" */ = {
 			isa = XCConfigurationList;

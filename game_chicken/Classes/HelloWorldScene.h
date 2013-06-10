@@ -13,6 +13,7 @@ private:
     cocos2d::CCPoint touchLocation;
     int sumPoint;
     cocos2d:: CCSprite * textSumPoint;
+    cocos2d:: CCSprite * textLevel;
     int level;
     bool isUpLevel1;
     bool isUpLevel2;
@@ -34,6 +35,12 @@ public:
     void gamelogicAddEgg(float dt);
     void update(float dt);
     void updateLevel(float dt);
+    int readFile(char * c);
+    void writeFile(int level, char * c);
+    
+    void onPause(cocos2d::CCObject *node);
+    
+    void removeSprite(cocos2d::CCNode *node);
     
     virtual bool ccTouchBegan(cocos2d::CCTouch * touch,cocos2d::CCEvent* event);
 	virtual void ccTouchesMoved(cocos2d::CCSet* touch,cocos2d::CCEvent* event);

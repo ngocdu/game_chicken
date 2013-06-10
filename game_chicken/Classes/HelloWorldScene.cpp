@@ -1,7 +1,7 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
 #include "Egg.h"
-
+#include "Menu_Game.h"
 using namespace cocos2d;
 using namespace CocosDenshion;
 
@@ -45,9 +45,7 @@ bool HelloWorld::init()
     // create menu, it's an autorelease object
     CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
     pMenu->setPosition( CCPointZero );
-    this->addChild(pMenu, 1);
-
-
+    this->addChild(pMenu, 1);    
 
     // ask director the window size
     CCSize size = CCDirector::sharedDirector()->getWinSize();
@@ -74,6 +72,9 @@ bool HelloWorld::init()
     isUpLevel2 = true;
     
     
+    CCLabelTTF *lbPoint=CCLabelTTF::create("Point: ", "Times New Roman",24);
+    lbPoint->setPosition(ccp(35,size.height/2));
+    this->addChild(lbPoint,5);
     
     CCTexture2D *txPoint=new CCTexture2D();
     char strPoint[20] ={0};
@@ -81,18 +82,39 @@ bool HelloWorld::init()
     txPoint->initWithString(strPoint,"Times New Roman",24);
     
     textSumPoint=CCSprite::createWithTexture(txPoint);
-    //textSumPoint->setTexture(txPoint);
-    textSumPoint->setPosition(ccp(10,size.height/2));
+    textSumPoint->setPosition(ccp(70,size.height/2));
     this->addChild(textSumPoint);
+    
+    
+    CCLabelTTF *lbLevel=CCLabelTTF::create("Level: ", "Times New Roman",24);
+    lbLevel->setPosition(ccp(35,size.height/2-25));
+    this->addChild(lbLevel);
+    
+    CCTexture2D *txLevel=new CCTexture2D();
+    char strLevel[20] ={0};
+    sprintf(strLevel, "%i",level);
+    txLevel->initWithString(strLevel,"Times New Roman",24);
+    
+    textLevel=CCSprite::createWithTexture(txLevel);
+    textLevel->setPosition(ccp(70,size.height/2-25));
+    this->addChild(textLevel);
     
     
     basket = CCSprite::create("giotrung.png");
     basket->cocos2d::CCNode::setPosition(size.width/2, 20);
+    basket->setScale(0.6);
     this->addChild(basket,1);
     
+    // pause button
+    CCMenuItem* item2 = CCMenuItemFont::create("Pause", this, menu_selector(HelloWorld::onPause) );
+    CCMenu* menuP = CCMenu::create(item2, NULL);
+    menuP->setPosition( ccp(size.width-40,50) );
+    
+    this->addChild( menuP );
+    
     this->addChickenAndTrough();
-    this->schedule(schedule_selector(HelloWorld::gamelogicAddEgg), 2);
-    this->schedule(schedule_selector(HelloWorld::update), 1/40);
+    this->schedule(schedule_selector(HelloWorld::gamelogicAddEgg), 3);
+    this->schedule(schedule_selector(HelloWorld::update), 1/50);
     
     return true;
 }
@@ -179,13 +201,18 @@ void HelloWorld::addEgg()
             point = chicken->getPosition();
         }
         
-        
     }
     CCARRAY_FOREACH(arrayTrough, j)
     {
         trough = (CCSprite*)j;
         break;
     }
+    
+    CCRotateTo *rotate1 = CCRotateTo::create(0.5,25);
+    CCRotateTo *rotate2 = CCRotateTo::create(0.5, 0);
+    CCSequence *sq= CCSequence::createWithTwoActions(rotate1, rotate2);
+    chicken->runAction(sq);
+    
     Egg *e = new Egg(ra1);
     e->setDeleted(false);
     if (ra1==0) {
@@ -199,17 +226,8 @@ void HelloWorld::addEgg()
     {
          e->initWithFile("vangegg1.png"); 
     }
-    if (sumPoint<30) {
-        e->setDuritionMove(8);
-    }
-    else if (sumPoint<60)
-    {
-        e->setDuritionMove(7);
-    }
-    else if (sumPoint<100)
-    {
-        e->setDuritionMove(6);
-    }
+    
+    e->setDuritionMove(8);
     e->setPosition(ccp(point.x - chicken->getContentSize().width/2+20,point.y - chicken->getContentSize().height/2));
     
     CCPoint p1 = ccp(chicken->getPosition().x - chicken->getContentSize().width/2+20,chicken->getPosition().y - chicken->getContentSize().height/2 - trough->getContentSize().height/2);
@@ -221,7 +239,7 @@ void HelloWorld::addEgg()
     arrayEgg->addObject(e);
     this->addChild(e,3);
     
-    
+    SimpleAudioEngine::sharedEngine()->playBackgroundMusic("sound3.mp3");
     
 }
 void HelloWorld::gamelogicAddEgg(float dt)
@@ -234,26 +252,70 @@ void HelloWorld::update(float dt)
     
     CCObject *i;
     CCObject *j;
-    CCArray *arRemoveEggTrue = new CCArray();
+    CCArray *arRemoveEggTrue = new CCArray();//mang nhung qua trung duoc hung
     CCArray *arRemoveEggFalse = new CCArray();
     CCARRAY_FOREACH(arrayEgg, i)
     {
         Egg *e = (Egg*)i;
+        bool v = false;
+        
         int kc = ccpDistance(basket->getPosition(), e->getPosition());
-        if(kc < basket->getContentSize().height/2 && e->getPosition().x >= basket->getPosition().x-basket->getContentSize().width/2+e->getContentSize().width &&  e->getPosition().x <= basket->getPosition().x + basket->getContentSize().width/2 - e->getContentSize().width )
+        float kc2 = sqrtf(basket->getContentSize().height/2*basket->getContentSize().height/2+basket->getContentSize().width/2*basket->getContentSize().width/2);
+        if(kc < basket->getContentSize().height/2 && e->getPosition().x >= basket->getPosition().x-basket->getContentSize().width/2+e->getContentSize().width/2 &&  e->getPosition().x <= basket->getPosition().x + basket->getContentSize().width/2 - e->getContentSize().width/2 )
         {
             arRemoveEggTrue->addObject(e);
+            
+        }
+        
+        if(kc < kc2-5 && ((e->getPosition().x > basket->getPosition().x - basket->getContentSize().width/2 - e->getContentSize().width/2 && e->getPosition().x < basket->getPosition().x - basket->getContentSize().width/2 + e->getContentSize().width/2)||(e->getPosition().x < basket->getPosition().x + basket->getContentSize().width/2 + e->getContentSize().width/2 && e->getPosition().x >= basket->getPosition().x + basket->getContentSize().width/2 - e->getContentSize().width)))
+        {
+            arRemoveEggTrue->addObject(e);
+            CCSprite * eggV =CCSprite::create("eggVo.png");
+            eggV->setScale(0.12);
+            eggV->setPosition(e->getPosition());
+            CCFadeOut *fade = CCFadeOut::create(3);
+            CCMoveTo *move = CCMoveTo::create(2, ccp(e->getPositionX(),50));
+            CCCallFuncN *remove = CCCallFuncN::create(this, callfuncN_selector(HelloWorld::removeSprite));
+            CCArray *ar =new CCArray();
+            ar->addObject(move);
+            ar->addObject(fade);
+            ar->addObject(remove);
+            CCSequence *sq = CCSequence::create(ar);
+            eggV->runAction(sq);
+            this->addChild(eggV,5);
+            
         }
         //xoa nhung qua trung roi xong
+        CCSprite * eggV;
         if (e->getDeleted()==true) {
             arRemoveEggFalse->addObject(e);
+            
+            if (e->getPoint()==0) {
+                eggV = CCSprite::create("egg1.png");
+                eggV->setScale(0.15);
+            }
+            else if (e->getPoint() == 1)
+            {
+                eggV = CCSprite::create("egg2.png");
+                eggV->setScale(0.12);
+            }
+            else {
+                eggV = CCSprite::create("egg2.png");
+                eggV->setScale(0.12);
+            }
+            
+            eggV->setPosition(e->getPosition());
+            
+            CCFadeOut *fade = CCFadeOut::create(3);
+            CCCallFuncN *remove = CCCallFuncN::create(this, callfuncN_selector(HelloWorld::removeSprite));
+            CCSequence *sq = CCSequence::createWithTwoActions(fade, remove);
+            eggV->runAction(sq);
+            this->addChild(eggV);
         }
     }
     CCARRAY_FOREACH(arRemoveEggTrue, j)
     {
         Egg *e =(Egg*)j;
-        arrayEgg->removeObject(e);
-        this->removeChild(e, true);
         
         if (e->getPoint() != 0) {
             sumPoint += (e->getPoint()+1)*2;
@@ -262,6 +324,9 @@ void HelloWorld::update(float dt)
         {
             sumPoint -= 5;
         }
+        
+        arrayEgg->removeObject(e);
+        this->removeChild(e, true);
         
     }
     
@@ -284,12 +349,42 @@ void HelloWorld::update(float dt)
     txPoint->initWithString(strPoint,"Times New Roman",24);
     textSumPoint->setTexture(txPoint);
     
-    //-------------
-//    if(sumPoint<0 || sumPoint > 200)
-//    {
-//        this->unschedule(schedule_selector(HelloWorld::gamelogicAddEgg));
-//        this->unschedule(schedule_selector(HelloWorld::update));
-//    }
+    
+    CCTexture2D *txLevel=new CCTexture2D();
+    char strLevel[20] ={0};
+    sprintf(strLevel, "%i",level);
+    txLevel->initWithString(strLevel,"Times New Roman",24);
+    textLevel->setTexture(txLevel);
+    
+    if (sumPoint >= level*30) {
+        level++;
+        if (level<=5) {
+            this->schedule(schedule_selector(HelloWorld::gamelogicAddEgg), 3-level/2);
+            basket->setScale(basket->getScale()+0.1);
+        }
+    }
+    
+    // win
+    if (sumPoint>=500) {
+        this->unschedule(schedule_selector(HelloWorld::gamelogicAddEgg));
+        CCLabelTTF *win =CCLabelTTF::create("You win", "Times New Roman", 40);
+        win->setPosition(ccp(240, 200));
+        this->addChild(win);
+        
+//        CCParticleSystem *flower;
+//        flower = CCParticleFlower::create();
+//        flower->retain();
+//        flower->setTexture( CCTextureCache::sharedTextureCache()->addImage("stars.png") );
+//        this->addChild(flower, 10);
+        
+    }
+    
+    if (sumPoint<0) {
+        this->unschedule(schedule_selector(HelloWorld::gamelogicAddEgg));
+        CCLabelTTF *fail =CCLabelTTF::create("You fail", "Times New Roman", 40);
+        fail->setPosition(ccp(240, 200));
+        this->addChild(fail);
+    }
     
 }
 void HelloWorld::updateLevel(float dt)
@@ -301,11 +396,37 @@ void HelloWorld::updateLevel(float dt)
         this->schedule(schedule_selector(HelloWorld::gamelogicAddEgg), 4/level);
     }
 }
+void HelloWorld::removeSprite(cocos2d::CCNode *node)
+{
+    CCSprite *sp = (CCSprite*)node;
+    this->removeChild(sp, true);
+}
 void HelloWorld::menuCloseCallback(CCObject* pSender)
 {
-    CCDirector::sharedDirector()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
+    CCDirector::sharedDirector()->replaceScene(Menu_Game::scene());
+}
+void HelloWorld::onPause(cocos2d::CCObject *node)
+{
+    if(CCDirector::sharedDirector()->isPaused())
+        CCDirector::sharedDirector()->resume();
+    else
+        CCDirector::sharedDirector()->pause();
+}
+int HelloWorld::readFile(char *filename)
+{
+    FILE *f;
+    int level =0;
+    f=fopen(filename, "rt");
+    while (!feof(f)) {
+        fscanf(f, "%i",&level);
+    }
+    fclose(f);
+    return level;
+}
+void HelloWorld::writeFile(int level, char *filename)
+{
+    FILE *f;
+    f =fopen(filename, "w");
+    fprintf(f, "%i",level);
+    fclose(f);
 }
