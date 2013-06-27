@@ -8,7 +8,7 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "HelloWorldScene.h"
+#include "GamePlay.h"
 #include "Menu_Game.h"
 USING_NS_CC;
 using namespace CocosDenshion;

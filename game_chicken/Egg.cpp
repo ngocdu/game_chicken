@@ -40,9 +40,9 @@ void Egg::setDirection(int direction)
 void Egg::move(cocos2d::CCPoint point,cocos2d::CCPoint point2,cocos2d::CCPoint point3)
 {
     float durtion = this->getDuritionMove();
-    CCMoveTo *move = CCMoveTo::create(durtion/10, point);
-    CCMoveTo *move2 = CCMoveTo::create(durtion/2, point2);
-    CCMoveTo *move3 = CCMoveTo::create(durtion/3, point3);
+    CCMoveTo *move = CCMoveTo::create(durtion / 10, point);
+    CCMoveTo *move2 = CCMoveTo::create(durtion / 2, point2);
+    CCMoveTo *move3 = CCMoveTo::create(durtion / 3, point3);
     CCCallFuncN *remove = CCCallFuncN::create(this, callfuncN_selector(Egg::removeEgg));
     CCArray *ar = new CCArray();
     ar->addObject(move);
@@ -52,14 +52,14 @@ void Egg::move(cocos2d::CCPoint point,cocos2d::CCPoint point2,cocos2d::CCPoint p
     CCSequence *sq1 = CCSequence::create(ar);
     this->runAction(sq1);
     
-    CCRotateTo *rotate1 = CCRotateTo::create(durtion/30, 45);
-    CCRotateTo *rotate2 = CCRotateTo::create(durtion/30, 90);
-    CCRotateTo *rotate3 = CCRotateTo::create(durtion/30, 135);
-    CCRotateTo *rotate4 = CCRotateTo::create(durtion/30, 180);
-    CCRotateTo *rotate5 = CCRotateTo::create(durtion/30, 225);
-    CCRotateTo *rotate6 = CCRotateTo::create(durtion/30, 280);
-    CCRotateTo *rotate7 = CCRotateTo::create(durtion/30, 325);
-    CCRotateTo *rotate8 = CCRotateTo::create(durtion/30, 360);
+    CCRotateTo *rotate1 = CCRotateTo::create(durtion / 30, 45);
+    CCRotateTo *rotate2 = CCRotateTo::create(durtion / 30, 90);
+    CCRotateTo *rotate3 = CCRotateTo::create(durtion / 30, 135);
+    CCRotateTo *rotate4 = CCRotateTo::create(durtion / 30, 180);
+    CCRotateTo *rotate5 = CCRotateTo::create(durtion / 30, 225);
+    CCRotateTo *rotate6 = CCRotateTo::create(durtion / 30, 280);
+    CCRotateTo *rotate7 = CCRotateTo::create(durtion / 30, 325);
+    CCRotateTo *rotate8 = CCRotateTo::create(durtion / 30, 360);
     CCArray *array = new CCArray();
     array->addObject(rotate1);
     array->addObject(rotate2);
@@ -95,5 +95,3 @@ void Egg::setDuritionMove(float dt)
 {
     this->duritionMove = dt;
 }
-
-

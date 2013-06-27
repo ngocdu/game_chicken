@@ -15,14 +15,10 @@ public:
 	virtual bool init();
 	static cocos2d::CCScene* scene();
 	CREATE_FUNC(Menu_Game);
-    
 	void menu_play(CCObject* obj);
-
 	void menu_option(CCObject* obj);
-
 	void menu_exit(CCObject* obj);
 	void play();
-
 	void option();
 	void exit1();
 private:

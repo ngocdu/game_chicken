@@ -15,14 +15,9 @@ public:
 	virtual bool init();
 	static cocos2d::CCScene* scene();
 	CREATE_FUNC(Help);
-    
 	void menu_home(CCObject* obj);
-
 	void home();
 private:
     
 };
-
-
-
 #endif

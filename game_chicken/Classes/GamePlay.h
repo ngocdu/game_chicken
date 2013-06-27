@@ -1,9 +1,9 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __GamePlay_SCENE_H__
+#define __GamePlay_SCENE_H__
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::CCLayer
+class GamePlay : public cocos2d::CCLayer
 {
 private:
     cocos2d::CCArray *arrayChicken;
@@ -19,16 +19,10 @@ private:
     bool isUpLevel2;
     
 public:
-    // Method 'init' in cocos2d-x returns bool, instead of 'id' in cocos2d-iphone (an object pointer)
     virtual bool init();
-
-    // there's no 'id' in cpp, so we recommend to return the class instance pointer
     static cocos2d::CCScene* scene();
-    
-    // a selector callback
     void menuCloseCallback(CCObject* pSender);
-    
-    
+
     //--------------------
     void addEgg();
     void addChickenAndTrough();
@@ -46,7 +40,7 @@ public:
 	virtual void ccTouchesMoved(cocos2d::CCSet* touch,cocos2d::CCEvent* event);
 	virtual void ccTouchesEnded(cocos2d::CCSet* touches,cocos2d::CCEvent* event);
     // preprocessor macro for "static create()" constructor ( node() deprecated )
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(GamePlay);
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __GamePlay_SCENE_H__

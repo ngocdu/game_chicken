@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "game_chicken/Menu_Game.cpp"
-         timestampString = "392553315.080366"
+         timestampString = "393994595.269966"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "99"
-         endingLineNumber = "99"
+         startingLineNumber = "92"
+         endingLineNumber = "92"
          landmarkName = "Menu_Game::exit1()"
          landmarkType = "5">
       </FileBreakpoint>

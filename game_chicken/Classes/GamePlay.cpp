@@ -1,17 +1,17 @@
-#include "HelloWorldScene.h"
+#include "GamePlay.h"
 #include "SimpleAudioEngine.h"
 #include "Egg.h"
 #include "Menu_Game.h"
 using namespace cocos2d;
 using namespace CocosDenshion;
 
-CCScene* HelloWorld::scene()
+CCScene* GamePlay::scene()
 {
     // 'scene' is an autorelease object
     CCScene *scene = CCScene::create();
     
     // 'layer' is an autorelease object
-    HelloWorld *layer = HelloWorld::create();
+    GamePlay *layer = GamePlay::create();
 
     // add layer as a child to scene
     scene->addChild(layer);
@@ -21,7 +21,7 @@ CCScene* HelloWorld::scene()
 }
 
 // on "init" you need to initialize your instance
-bool HelloWorld::init()
+bool GamePlay::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -39,7 +39,7 @@ bool HelloWorld::init()
                                         "CloseNormal.png",
                                         "CloseSelected.png",
                                         this,
-                                        menu_selector(HelloWorld::menuCloseCallback) );
+                                        menu_selector(GamePlay::menuCloseCallback) );
     pCloseItem->setPosition( ccp(CCDirector::sharedDirector()->getWinSize().width - 20, 20) );
 
     // create menu, it's an autorelease object
@@ -56,11 +56,10 @@ bool HelloWorld::init()
     pSprite->setScaleX((float)(size.width/pSprite->getContentSize().width));
     pSprite->setScaleY((float)(size.height/pSprite->getContentSize().height));
     // position the sprite on the center of the screen
-    pSprite->setPosition( ccp(size.width/2, size.height/2) );
+    pSprite->setPosition( ccp(size.width / 2, size.height / 2) );
 
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
-    
     
     //-----------------------------------------------------------
     arrayChicken = new CCArray();
@@ -72,53 +71,56 @@ bool HelloWorld::init()
     isUpLevel2 = true;
     
     
-    CCLabelTTF *lbPoint=CCLabelTTF::create("Point: ", "Times New Roman",24);
+    CCLabelTTF *lbPoint=CCLabelTTF::create("Point: ", "Times New Roman", 24);
     lbPoint->setPosition(ccp(35,size.height/2));
     this->addChild(lbPoint,5);
     
     CCTexture2D *txPoint=new CCTexture2D();
     char strPoint[20] ={0};
     sprintf(strPoint, "%i",sumPoint);
-    txPoint->initWithString(strPoint,"Times New Roman",24);
+    txPoint->initWithString(strPoint,"Times New Roman", 24);
     
     textSumPoint=CCSprite::createWithTexture(txPoint);
-    textSumPoint->setPosition(ccp(70,size.height/2));
+    textSumPoint->setPosition(ccp(70, size.height / 2));
     this->addChild(textSumPoint);
     
     
-    CCLabelTTF *lbLevel=CCLabelTTF::create("Level: ", "Times New Roman",24);
-    lbLevel->setPosition(ccp(35,size.height/2-25));
+    CCLabelTTF *lbLevel=CCLabelTTF::create("Level: ", "Times New Roman", 24);
+    lbLevel->setPosition(ccp(35,size.height/ 2 - 25));
     this->addChild(lbLevel);
     
     CCTexture2D *txLevel=new CCTexture2D();
     char strLevel[20] ={0};
     sprintf(strLevel, "%i",level);
-    txLevel->initWithString(strLevel,"Times New Roman",24);
+    txLevel->initWithString(strLevel,"Times New Roman", 24);
     
     textLevel=CCSprite::createWithTexture(txLevel);
-    textLevel->setPosition(ccp(70,size.height/2-25));
+    textLevel->setPosition(ccp(70,size.height / 2 - 25));
     this->addChild(textLevel);
     
     
     basket = CCSprite::create("giotrung.png");
-    basket->cocos2d::CCNode::setPosition(size.width/2, 20);
+    basket->cocos2d::CCNode::setPosition(size.width / 2, 20);
     basket->setScale(0.6);
     this->addChild(basket,1);
     
+    //CCSprite *sq = (CCSprite*)i;
+    
     // pause button
-    CCMenuItem* item2 = CCMenuItemFont::create("Pause", this, menu_selector(HelloWorld::onPause) );
+    CCMenuItem* item2 = CCMenuItemFont::create("Pause", this,
+                                            menu_selector(GamePlay::onPause) );
     CCMenu* menuP = CCMenu::create(item2, NULL);
-    menuP->setPosition( ccp(size.width-40,50) );
+    menuP->setPosition( ccp(size.width - 40, 50) );
     
     this->addChild( menuP );
     
     this->addChickenAndTrough();
-    this->schedule(schedule_selector(HelloWorld::gamelogicAddEgg), 3);
-    this->schedule(schedule_selector(HelloWorld::update), 1/50);
+    this->schedule(schedule_selector(GamePlay::gamelogicAddEgg), 3);
+    this->schedule(schedule_selector(GamePlay::update), 1/50);
     
     return true;
 }
-bool HelloWorld::ccTouchBegan(cocos2d::CCTouch * touch,cocos2d::CCEvent* event)
+bool GamePlay::ccTouchBegan(cocos2d::CCTouch * touch,cocos2d::CCEvent* event)
 {
 	CCPoint location=touch->getLocationInView();
 	location=CCDirector::sharedDirector()->convertToGL(location);
@@ -126,7 +128,7 @@ bool HelloWorld::ccTouchBegan(cocos2d::CCTouch * touch,cocos2d::CCEvent* event)
 	this->touchLocation = location;
     return true;
 }
-void HelloWorld::ccTouchesMoved(cocos2d::CCSet* touch,cocos2d::CCEvent* event)
+void GamePlay::ccTouchesMoved(cocos2d::CCSet* touch,cocos2d::CCEvent* event)
 {
     CCSize size = CCDirector::sharedDirector()->getWinSize();
     CCTouch *touch1 = (CCTouch*)(touch->anyObject());
@@ -137,55 +139,52 @@ void HelloWorld::ccTouchesMoved(cocos2d::CCSet* touch,cocos2d::CCEvent* event)
     }
     
 }
-void HelloWorld::ccTouchesEnded(cocos2d::CCSet* touches,cocos2d::CCEvent* event)
+void GamePlay::ccTouchesEnded(cocos2d::CCSet* touches,cocos2d::CCEvent* event)
 {
 	
 }
-void HelloWorld::addChickenAndTrough()
+void GamePlay::addChickenAndTrough()
 {
     CCSize size=CCDirector::sharedDirector()->getWinSize();
     
     //-----------1----------------
     CCSprite * troughleft1 = CCSprite::create("keleft.png");
-    troughleft1->setPosition(ccp(size.width/10,size.height*4/6));
+    troughleft1->setPosition(ccp(size.width / 10, size.height * 4 / 6));
     arrayTrough->addObject(troughleft1);
     this->addChild(troughleft1);
     CCSprite *chikenleft1 = CCSprite::create("gatraibt.png");
-    chikenleft1->setPosition(ccp(troughleft1->getPositionX(),troughleft1->getPositionY()+troughleft1->getContentSize().height/2+chikenleft1->getContentSize().height/2));
+    chikenleft1->setPosition(ccp(troughleft1->getPositionX(), troughleft1->getPositionY() +
+            troughleft1->getContentSize().height/2 + chikenleft1->getContentSize().height/2));
     arrayChicken->addObject(chikenleft1);
     this->addChild(chikenleft1,4);
     
     //---------2---------
     CCSprite * troughleft2 = CCSprite::create("keleft.png");
-    troughleft2->setPosition(ccp(size.width*5/10,size.height*4/6));
+    troughleft2->setPosition(ccp(size.width * 5/10, size.height * 4/6));
     arrayTrough->addObject(troughleft2);
     this->addChild(troughleft2);
     CCSprite *chikenleft2= CCSprite::create("gatraibt.png");
-    chikenleft2->setPosition(ccp(troughleft2->getPositionX(),troughleft2->getPositionY()+troughleft2->getContentSize().height/2+chikenleft2->getContentSize().height/2));
+    chikenleft2->setPosition(ccp(troughleft2->getPositionX(), troughleft2->getPositionY() +
+            troughleft2->getContentSize().height/2+chikenleft2->getContentSize().height/2));
     arrayChicken->addObject(chikenleft2);
-    this->addChild(chikenleft2,4);
+    this->addChild(chikenleft2, 4);
 
     //---------3-----------
     CCSprite * troughleft3 = CCSprite::create("keleft.png");
-    troughleft3->setPosition(ccp(size.width*8.5/10,size.height*4/6));
+    troughleft3->setPosition(ccp(size.width* 8.5/10, size.height * 4/6));
     arrayTrough->addObject(troughleft3);
     this->addChild(troughleft3);
     CCSprite *chikenleft3 = CCSprite::create("gatraibt.png");
-    chikenleft3->setPosition(ccp(troughleft3->getPositionX(),troughleft3->getPositionY()+troughleft3->getContentSize().height/2+chikenleft3->getContentSize().height/2));
+    chikenleft3->setPosition(ccp(troughleft3->getPositionX(), troughleft3->getPositionY() +
+            troughleft3->getContentSize().height/2+chikenleft3->getContentSize().height/2));
     arrayChicken->addObject(chikenleft3);
-    this->addChild(chikenleft3,4);
-
-    
-    
+    this->addChild(chikenleft3,4); 
 }
 
-void HelloWorld::addEgg()
+void GamePlay::addEgg()
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    
     int ra = rand() % 3;
     int ra1 = rand() % 3;
-    
     int d=-1;
     CCPoint point;
     CCObject *i;
@@ -195,7 +194,7 @@ void HelloWorld::addEgg()
     CCARRAY_FOREACH(arrayChicken, i)
     {
         d++;
-        if(d==ra)
+        if(d == ra)
         {
             chicken = (CCSprite*)i;
             point = chicken->getPosition();
@@ -208,9 +207,9 @@ void HelloWorld::addEgg()
         break;
     }
     
-    CCRotateTo *rotate1 = CCRotateTo::create(0.5,25);
+    CCRotateTo *rotate1 = CCRotateTo::create(0.5, 25);
     CCRotateTo *rotate2 = CCRotateTo::create(0.5, 0);
-    CCSequence *sq= CCSequence::createWithTwoActions(rotate1, rotate2);
+    CCSequence *sq = CCSequence::createWithTwoActions(rotate1, rotate2);
     chicken->runAction(sq);
     
     Egg *e = new Egg(ra1);
@@ -228,28 +227,25 @@ void HelloWorld::addEgg()
     }
     
     e->setDuritionMove(8);
-    e->setPosition(ccp(point.x - chicken->getContentSize().width/2+20,point.y - chicken->getContentSize().height/2));
+    e->setPosition(ccp(point.x - chicken->getContentSize().width / 2 + 20, point.y -
+                       chicken->getContentSize().height / 2));
     
-    CCPoint p1 = ccp(chicken->getPosition().x - chicken->getContentSize().width/2+20,chicken->getPosition().y - chicken->getContentSize().height/2 - trough->getContentSize().height/2);
-    CCPoint p2 = ccp(p1.x + trough->getContentSize().width-10,p1.y);
-    CCPoint p3 = ccp(p2.x,p2.y-150);
-    
-    
-    e->move(p1,p2,p3);
+    CCPoint p1 = ccp(chicken->getPosition().x - chicken->getContentSize().width / 2 +
+        20, chicken->getPosition().y - chicken->getContentSize().height/2 - trough->getContentSize().height/2);
+    CCPoint p2 = ccp(p1.x + trough->getContentSize().width - 10, p1.y);
+    CCPoint p3 = ccp(p2.x, 80);
+    e->move(p1, p2, p3);
     arrayEgg->addObject(e);
-    this->addChild(e,3);
+    this->addChild(e, 3);
     
     SimpleAudioEngine::sharedEngine()->playEffect("sound3.mp3");
-    
 }
-void HelloWorld::gamelogicAddEgg(float dt)
+void GamePlay::gamelogicAddEgg(float dt)
 {
     this->addEgg();
 }
-void HelloWorld::update(float dt)
+void GamePlay::update(float dt)
 {
-    CCSize size = CCDirector::sharedDirector()->getWinSize();
-    
     CCObject *i;
     CCObject *j;
     CCArray *arRemoveEggTrue = new CCArray();//mang nhung qua trung duoc hung
@@ -257,32 +253,41 @@ void HelloWorld::update(float dt)
     CCARRAY_FOREACH(arrayEgg, i)
     {
         Egg *e = (Egg*)i;
-        bool v = false;
-        
         int kc = ccpDistance(basket->getPosition(), e->getPosition());
-        float kc2 = sqrtf(basket->getContentSize().height/2*basket->getContentSize().height/2+basket->getContentSize().width/2*basket->getContentSize().width/2);
-        if(kc < basket->getContentSize().height/2 && e->getPosition().x >= basket->getPosition().x-basket->getContentSize().width/2+e->getContentSize().width/2 &&  e->getPosition().x <= basket->getPosition().x + basket->getContentSize().width/2 - e->getContentSize().width/2 )
+        float kc2 = sqrtf(basket->getContentSize().height/2 * basket->getContentSize().height/2 +
+                          basket->getContentSize().width/2 * basket->getContentSize().width/2);
+        if(kc < basket->getContentSize().height/2 &&
+           e->getPosition().x >= basket->getPosition().x - basket->getContentSize().width/2 +
+           e->getContentSize().width/2
+           &&  e->getPosition().x <= basket->getPosition().x +
+           basket->getContentSize().width/2 - e->getContentSize().width/2 )
         {
             arRemoveEggTrue->addObject(e);
             
         }
-        
-        if(kc < kc2-5 && ((e->getPosition().x > basket->getPosition().x - basket->getContentSize().width/2 - e->getContentSize().width/2 && e->getPosition().x < basket->getPosition().x - basket->getContentSize().width/2 + e->getContentSize().width/2)||(e->getPosition().x < basket->getPosition().x + basket->getContentSize().width/2 + e->getContentSize().width/2 && e->getPosition().x >= basket->getPosition().x + basket->getContentSize().width/2 - e->getContentSize().width)))
+        if(kc < kc2-5 && ((e->getPosition().x > basket->getPosition().x -
+                           basket->getContentSize().width/2 - e->getContentSize().width/2
+            && e->getPosition().x < basket->getPosition().x - basket->getContentSize().width/2 +
+               e->getContentSize().width/2)||(e->getPosition().x < basket->getPosition().x +
+               basket->getContentSize().width/2 + e->getContentSize().width/2
+            && e->getPosition().x >= basket->getPosition().x +
+               basket->getContentSize().width/2 - e->getContentSize().width)))
         {
             arRemoveEggTrue->addObject(e);
             CCSprite * eggV =CCSprite::create("eggVo.png");
             eggV->setScale(0.12);
             eggV->setPosition(e->getPosition());
             CCFadeOut *fade = CCFadeOut::create(3);
-            CCMoveTo *move = CCMoveTo::create(2, ccp(e->getPositionX(),50));
-            CCCallFuncN *remove = CCCallFuncN::create(this, callfuncN_selector(HelloWorld::removeSprite));
+            CCMoveTo *move = CCMoveTo::create(2, ccp(e->getPositionX(), 50));
+            CCCallFuncN *remove = CCCallFuncN::create(this,
+                            callfuncN_selector(GamePlay::removeSprite));
             CCArray *ar =new CCArray();
             ar->addObject(move);
             ar->addObject(fade);
             ar->addObject(remove);
             CCSequence *sq = CCSequence::create(ar);
             eggV->runAction(sq);
-            this->addChild(eggV,5);
+            this->addChild(eggV, 5);
             
         }
         //xoa nhung qua trung roi xong
@@ -305,9 +310,9 @@ void HelloWorld::update(float dt)
             }
             
             eggV->setPosition(e->getPosition());
-            
             CCFadeOut *fade = CCFadeOut::create(3);
-            CCCallFuncN *remove = CCCallFuncN::create(this, callfuncN_selector(HelloWorld::removeSprite));
+            CCCallFuncN *remove = CCCallFuncN::create(this,
+                                callfuncN_selector(GamePlay::removeSprite));
             CCSequence *sq = CCSequence::createWithTwoActions(fade, remove);
             eggV->runAction(sq);
             this->addChild(eggV);
@@ -318,7 +323,7 @@ void HelloWorld::update(float dt)
         Egg *e =(Egg*)j;
         
         if (e->getPoint() != 0) {
-            sumPoint += (e->getPoint()+1)*2;
+            sumPoint += (e->getPoint() + 1) * 2;
         }
         else if (e->getPoint() == 0)
         {
@@ -326,8 +331,7 @@ void HelloWorld::update(float dt)
         }
         
         arrayEgg->removeObject(e);
-        this->removeChild(e, true);
-        
+        this->removeChild(e, true);  
     }
     
     CCARRAY_FOREACH(arRemoveEggFalse, j)
@@ -338,95 +342,86 @@ void HelloWorld::update(float dt)
         
         if (e->getPoint() != 0) {
             sumPoint -= 5;
-        }
-        
-        
+        } 
     }
 
     CCTexture2D *txPoint=new CCTexture2D();
-    char strPoint[20] ={0};
-    sprintf(strPoint, "%i",sumPoint);
-    txPoint->initWithString(strPoint,"Times New Roman",24);
+    char strPoint[20] ={ 0 };
+    sprintf(strPoint, "%i", sumPoint);
+    txPoint->initWithString(strPoint, "Times New Roman", 24);
     textSumPoint->setTexture(txPoint);
     
     
     CCTexture2D *txLevel=new CCTexture2D();
-    char strLevel[20] ={0};
-    sprintf(strLevel, "%i",level);
-    txLevel->initWithString(strLevel,"Times New Roman",24);
+    char strLevel[20] ={ 0 };
+    sprintf(strLevel, "%i", level);
+    txLevel->initWithString(strLevel, "Times New Roman", 24);
     textLevel->setTexture(txLevel);
     
-    if (sumPoint >= level*30) {
+    if (sumPoint >= level * 30) {
         level++;
-        if (level<=5) {
-            this->schedule(schedule_selector(HelloWorld::gamelogicAddEgg), 3-level/2);
-            basket->setScale(basket->getScale()+0.1);
+        if (level <= 5) {
+            this->schedule(schedule_selector(GamePlay::gamelogicAddEgg), 3-level/2);
+            basket->setScale(basket->getScale() + 0.1);
         }
     }
     
     // win
     if (sumPoint>=500) {
-        this->unschedule(schedule_selector(HelloWorld::gamelogicAddEgg));
+        this->unschedule(schedule_selector(GamePlay::gamelogicAddEgg));
         CCLabelTTF *win =CCLabelTTF::create("You win", "Times New Roman", 40);
         win->setPosition(ccp(240, 200));
         this->addChild(win);
-        
-//        CCParticleSystem *flower;
-//        flower = CCParticleFlower::create();
-//        flower->retain();
-//        flower->setTexture( CCTextureCache::sharedTextureCache()->addImage("stars.png") );
-//        this->addChild(flower, 10);
-        
     }
     
     if (sumPoint<0) {
-        this->unschedule(schedule_selector(HelloWorld::gamelogicAddEgg));
+        this->unschedule(schedule_selector(GamePlay::gamelogicAddEgg));
         CCLabelTTF *fail =CCLabelTTF::create("You fail", "Times New Roman", 40);
         fail->setPosition(ccp(240, 200));
         this->addChild(fail);
     }
     
 }
-void HelloWorld::updateLevel(float dt)
+void GamePlay::updateLevel(float dt)
 {
     if (sumPoint > 50*level && isUpLevel1==false) {
         level += 1;
         isUpLevel2 = true;
-        this->unschedule(schedule_selector(HelloWorld::gamelogicAddEgg));
-        this->schedule(schedule_selector(HelloWorld::gamelogicAddEgg), 4/level);
+        this->unschedule(schedule_selector(GamePlay::gamelogicAddEgg));
+        this->schedule(schedule_selector(GamePlay::gamelogicAddEgg), 4/level);
     }
 }
-void HelloWorld::removeSprite(cocos2d::CCNode *node)
+void GamePlay::removeSprite(cocos2d::CCNode *node)
 {
     CCSprite *sp = (CCSprite*)node;
     this->removeChild(sp, true);
 }
-void HelloWorld::menuCloseCallback(CCObject* pSender)
+void GamePlay::menuCloseCallback(CCObject* pSender)
 {
     CCDirector::sharedDirector()->replaceScene(Menu_Game::scene());
 }
-void HelloWorld::onPause(cocos2d::CCObject *node)
+void GamePlay::onPause(cocos2d::CCObject *node)
 {
     if(CCDirector::sharedDirector()->isPaused())
         CCDirector::sharedDirector()->resume();
     else
         CCDirector::sharedDirector()->pause();
 }
-int HelloWorld::readFile(char *filename)
+int GamePlay::readFile(char *filename)
 {
     FILE *f;
     int level =0;
-    f=fopen(filename, "rt");
+    f = fopen(filename, "rt");
     while (!feof(f)) {
-        fscanf(f, "%i",&level);
+        fscanf(f, "%i", &level);
     }
     fclose(f);
     return level;
 }
-void HelloWorld::writeFile(int level, char *filename)
+void GamePlay::writeFile(int level, char *filename)
 {
     FILE *f;
     f =fopen(filename, "w");
-    fprintf(f, "%i",level);
+    fprintf(f, "%i", level);
     fclose(f);
 }

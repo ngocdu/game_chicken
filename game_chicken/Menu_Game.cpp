@@ -3,7 +3,7 @@
 //  game_chicken
 //
 //
-#include "HelloWorldScene.h"
+#include "GamePlay.h"
 #include "Menu_Game.h"
 #include "Help.h"
 using namespace cocos2d;
@@ -31,37 +31,31 @@ bool Menu_Game::init()
 		this->setTouchEnabled(true);
         // ask director the window size
         CCSize size = CCDirector::sharedDirector()->getWinSize();
-        
-        
-        // add "HelloWorld" splash screen"
+
         CCSprite* pSprite = CCSprite::create("nenf.png");
-        pSprite->setScaleX((float)(size.width/pSprite->getContentSize().width));
-        pSprite->setScaleY((float)(size.height/pSprite->getContentSize().height));
+        pSprite->setScaleX((float)(size.width / pSprite->getContentSize().width));
+        pSprite->setScaleY((float)(size.height / pSprite->getContentSize().height));
         // position the sprite on the center of the screen
-        pSprite->setPosition( ccp(size.width/2, size.height/2) );
-        
-        
+        pSprite->setPosition( ccp(size.width/2, size.height/2));
+            
         // add the sprite as a child to this layer
         this->addChild(pSprite, 0);
 		//menu Font
-		CCMenuItemFont* menuItemFontA=CCMenuItemFont::create("PLAY",this,menu_selector(Menu_Game::menu_play));
+		CCMenuItemFont* menuItemFontA=CCMenuItemFont::create("PLAY", this, menu_selector(Menu_Game::menu_play));
 		menuItemFontA->setFontSizeObj(30);
 		menuItemFontA->setColor(ccc3(1,198,1));
        
-		CCMenuItemFont* menuItemFont2=CCMenuItemFont::create("HELP",this,menu_selector(Menu_Game::menu_option));
+		CCMenuItemFont* menuItemFont2=CCMenuItemFont::create("HELP", this, menu_selector(Menu_Game::menu_option));
 		menuItemFont2->setFontSizeObj(30);
 		menuItemFont2->setColor(ccc3(1,1,1));
         
-		CCMenuItemFont* menuItemFont3=CCMenuItemFont::create("EXIT",this,menu_selector(Menu_Game::menu_exit));
+		CCMenuItemFont* menuItemFont3=CCMenuItemFont::create("EXIT", this, menu_selector(Menu_Game::menu_exit));
 		menuItemFont3->setFontSizeObj(30);
 		menuItemFont3->setColor(ccc3(198,198,198));
         
-		CCMenu * menu=CCMenu::create(menuItemFontA,menuItemFont2,menuItemFont3,NULL);
+		CCMenu * menu=CCMenu::create(menuItemFontA, menuItemFont2, menuItemFont3, NULL);
 		menu->alignItemsVertically();
 		this->addChild(menu);
-        
-		
-        
 		bRet=true;
 	}while(0);
 	return bRet;
@@ -83,8 +77,7 @@ void Menu_Game::menu_exit(CCObject* obj)
 
 void Menu_Game::play()
 {
-    CCDirector::sharedDirector()->replaceScene(HelloWorld::scene());
-	
+    CCDirector::sharedDirector()->replaceScene(GamePlay::scene());
 }
 
 void Menu_Game::option()
